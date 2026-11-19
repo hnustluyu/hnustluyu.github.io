@@ -4,14 +4,15 @@
 > 工作目录：`E:\westbar`　生成时间：2026-11-19
 
 > ✅ **已全部完成并上线（2026-11-19）**：43 篇（2008–2018）——38 篇从新浪新建、
-> 5 篇旧站重复自动跳过、旧链接一字未变。源码备份在 GitHub `hexo` 分支（commit `131147a`），
-> 静态站发布在 `master`（最新 commit `718e5e6`，**普通 commit，2015 年提交历史完整保留**）。
+> 5 篇旧站重复自动跳过、旧链接一字未变。源码备份在 GitHub `hexo` 分支（最新 `392d4c4`），
+> 静态站发布在 `master`（最新 `ed8c424`，**普通 commit，2015 年提交历史完整保留**）。
 > 线上 <https://www.westbar.cn> 已验证：抽查 2008/2009/2011/2018 四篇文章均返回 200，
 > CNAME 正常跳转。逐篇清单见 `import/import-report.md`。
 >
-> **导航菜单已修正**：去掉重复的「主頁」，「随笔」链接由错误的 `/tags/随笔/`（404）
-> 改为 `/categories/随笔/`。菜单统一在 `themes/yilia/_config.yml` 的 `menu` 里定义，
-> 不要在根 `_config.yml` 的 `theme_config.menu` 重复定义（Hexo 会合并两者导致重复项）。
+> **主题已换成 Fluid v1.9.9**（现代简约、单栏、移动端友好），替换原 Yilia。
+> 头像换成漫画白兔（`source/img/rabbit-avatar.png`，由原白兔照片 AI 生成后裁成圆形去水印），
+> 同时用作 favicon。43 篇文章和老链接全部保留。菜单在 `themes/fluid/_config.yml` 的 `menu` 定义
+> （home / archive / category / tag）。新增依赖 `hexo-generator-search`、`@adobe/css-tools`。
 >
 > 以后日常：写日记 → 本地预览 → `.\bin\publish.ps1` 一条命令发布（详见第五节）。
 > 首次在新机器用本手册时，按第三节配 SSH Key、并执行 `.\bin\setup.ps1` 一次。
@@ -37,7 +38,7 @@
 | --- | --- |
 | 仓库 `hnustluyu/hnustluyu.github.io` | **只有编译后的静态站**，不是 Hexo 源码。master 分支，33 次提交，最后一次 2015-12-27。里面是 `index.html`、`css/`、`js/`、`2010/`、`2011/`、`archives/` 等 |
 | Hexo 源码 | **GitHub 上没有**（`_config.yml`、`source/_posts`、主题都不在），原本只存在你 2015 年那台电脑里 |
-| 线上站点 | `https://www.westbar.cn` 目前正常访问，标题「西倉」，主题 **Yilia**，permalimk 形如 `/2011/09/09/文章标题/` |
+| 线上站点 | `https://www.westbar.cn` 正常访问，标题「西倉」，主题已从 **Yilia** 换成 **Fluid**，permalink 形如 `/2011/09/09/文章标题/` |
 | 现有文章 | 迁移前 **5 篇**（2010-10-29 ~ 2011-09-09），分类「扯淡」，标签完整；导入新浪导出后现为 **43 篇** |
 | CNAME | 文件内容是 `www.westbar.cn` |
 | 新浪博客 | 首页 <https://blog.sina.com.cn/u/1389586804> 现在返回 **「系统维护中，博文仅作者可见。登陆后可查看本人文章。」** |
@@ -53,17 +54,21 @@
 
 ```
 E:\westbar\
-├── _config.yml                 站点配置（url / permalink / Yilia 主题参数，与原站一致）
+├── _config.yml                 站点配置（url / permalink / 主题=fluid，与原站一致）
 ├── package.json                Hexo 7.3 + 依赖 + npm 快捷命令
 ├── .gitignore                  排除 node_modules / public / 私有导出文件
 ├── source/
 │   ├── CNAME                   www.westbar.cn
 │   ├── _posts/*.md             43 篇文章（5 篇旧站反提取 + 38 篇新浪导入）
 │   ├── css/ js/ fancybox/
-│   ├── img/ uploads/           旧站全部静态资源（已复制回来）
+│   ├── img/
+│   │   ├── rabbit-avatar.png   ★ 漫画白兔头像（favicon / 关于页头像也用它）
+│   │   └── avatar.png          旧版头像副本（兼容）
+│   ├── uploads/avatar.png      旧站头像副本（兼容）
 │   ├── favicon.png             顺手补上（旧站 /favicon.png 原本是 404）
 │   └── images/sina/            迁移时下载的图片放这里
-├── themes/yilia/               Yilia 主题（已配置成原站菜单/头像/社交链接）
+├── themes/fluid/               ★ 当前主题 Fluid v1.9.9（菜单/标语/头像在其 _config.yml）
+├── themes/yilia/               旧主题 Yilia（保留备用，未启用）
 ├── tools/
 │   ├── restore_snapshot.py     旧站静态页 → Hexo Markdown（保留老链接与原日期）
 │   └── import_sina.py          新浪导出文件 → Hexo Markdown（通用导入器）
@@ -80,8 +85,8 @@ E:\westbar\
 **已实测通过**：
 
 - `npm install` → 231 个包，Node 22 / npm 10 下正常；
-- `npm run build` → 初版 `97 files generated`，导入 38 篇后 `179 files generated`，
-  **Yilia 主题在新版 Hexo 上可用，外观基本保留**；
+- `npm run build` → 导入 38 篇后 Yilia 版 `179 files generated`，
+  **换成 Fluid 主题后 `195 files generated`（43 篇文章全部保留）**；
 - 5 篇文章生成的路径与线上**逐字一致**：
   `/2010/10/29/谁也输不掉曾经付出过的爱/`、`/2011/01/18/我也不知道写的什么/`、
   `/2011/03/04/蛋炒饭里的事/`、`/2011/04/26/江城没有子/`、
@@ -327,17 +332,44 @@ front-matter 已自动填好日期；你只管写正文。新文章的 URL 会�
 
 ---
 
-## 八、下一步：只剩「发布」了
+## 八、已完成，以后怎么维护
 
-本地侧全部就绪：43 篇文章、Yilia 主题、导入/写作/发布脚本、核对报告都在 `E:\westbar`。
-现在只差把内容推到 GitHub：
+全部就绪并已上线：43 篇文章、Fluid 主题、漫画白兔头像、导入/写作/发布脚本、
+核对报告都在 `E:\westbar`。源码在 `hexo` 分支，静态站在 `master`。
 
-1. **先改密码**（第 0 节），按第三节配好 SSH Key；
-2. `.\bin\setup.ps1 -Push` 把 Hexo 源码备份到 `hexo` 分支（可选但强烈建议）；
-3. `.\bin\publish.ps1` 发布 —— 约 1 分钟后 <https://www.westbar.cn> 就能看到 43 篇；
-4. 以后写新日记就是第五节那 3 条命令。
+日常只剩两件事：
 
-需要我继续的话，告诉我哪一件：
+1. 写新日记 —— 第五节那 3 条命令；
+2. **改头像 / 换主题** —— 见下方「九、主题与头像维护」。
+
+还没做的可选事项：改 GitHub 密码 + 开两步验证（第 0 节）、找回老文配图。
+
+---
+
+## 九、主题与头像维护
+
+**主题配置**：Fluid 的所有外观设置都在 `themes/fluid/_config.yml`（这是独立配置文件，
+Hexo 不会和根目录 `_config.yml` 的 `theme_config` 合并）。常用项：
+
+- `blog_title`：导航栏左侧站点名（当前「西倉」）；
+- `menu`：导航栏菜单（home / archive / category / tag）；
+- `index.slogan.text`：首页副标题；
+- `index.banner_img` / `banner_img_height`：首页头图与高度；
+- `about.avatar` / `about.name` / `about.intro`：关于页；
+- 顶部 `favicon` / `apple_touch_icon`：浏览器标签图标。
+
+改完跑 `npm run build` 看 `public/`，确认无误再 `.\bin\publish.ps1`。
+
+**换头像**：把新图放到 `source/img/rabbit-avatar.png`（建议正方形、裁成圆形、512×512），
+配置里所有头像引用都指向它，不用改其他文件。当前这张是白兔照片 AI 生成后裁圆去水印的版本。
+
+**Fluid 依赖**：`hexo-generator-search`（站内搜索）、`@adobe/css-tools`（代码高亮）已装并写进
+`package.json`。换机器时 `npm install` 会自动装好。
+
+**老链接**：permalink 由根 `_config.yml` 的 `permalink: ':year/:month/:day/:title/'` 决定，
+无论怎么换主题都不要改它，否则 2015 年以来的老链接会失效。
+
+**还想继续做的可选事项**：
 
 - 找回老文章的配图（给我图片文件或图床链接，我批量补进 `source/images/`）；
 - 批量调整新导入 38 篇的分类 / 标签；
