@@ -4,15 +4,22 @@
 > 工作目录：`E:\westbar`　生成时间：2026-11-19
 
 > ✅ **已全部完成并上线（2026-11-19）**：43 篇（2008–2018）——38 篇从新浪新建、
-> 5 篇旧站重复自动跳过、旧链接一字未变。源码备份在 GitHub `hexo` 分支（最新 `392d4c4`），
-> 静态站发布在 `master`（最新 `ed8c424`，**普通 commit，2015 年提交历史完整保留**）。
+> 5 篇旧站重复自动跳过、旧链接一字未变。源码备份在 GitHub `hexo` 分支（最新 `c496863`），
+> 静态站发布在 `master`（最新 `4a21e15`，**普通 commit，2015 年提交历史完整保留**）。
 > 线上 <https://www.westbar.cn> 已验证：抽查 2008/2009/2011/2018 四篇文章均返回 200，
 > CNAME 正常跳转。逐篇清单见 `import/import-report.md`。
 >
 > **主题已换成 Fluid v1.9.9**（现代简约、单栏、移动端友好），替换原 Yilia。
 > 头像换成漫画白兔（`source/img/rabbit-avatar.png`，由原白兔照片 AI 生成后裁成圆形去水印），
 > 同时用作 favicon。43 篇文章和老链接全部保留。菜单在 `themes/fluid/_config.yml` 的 `menu` 定义
-> （home / archive / category / tag）。新增依赖 `hexo-generator-search`、`@adobe/css-tools`。
+> （home / archive / category / tag）。新增依赖 `hexo-generator-search`、`@adobe/css-tools`、
+> **`hexo-renderer-stylus`**（关键：Fluid 的 `.styl` 样式表靠它编译成浏览器要的 `/css/main.css`，
+> 缺了会导致整站无样式，`npm install` 时务必保留）。
+>
+> **2026-11-19 晚间复查修复**：发现线上页面引用 `/css/main.css` 但返回 404（整站裸奔、
+> 只有 HTML 骨架）。根因是换 Fluid 时漏装 `hexo-renderer-stylus`——Yilia 用预编译 CSS 不依赖它，
+> Fluid 的样式是 Stylus 源码、必须现场编译。已安装并重建，`main.css` 生成 51KB，重新发布后
+> 线上 CSS 返回 200（52017B），样式恢复正常。
 >
 > 以后日常：写日记 → 本地预览 → `.\bin\publish.ps1` 一条命令发布（详见第五节）。
 > 首次在新机器用本手册时，按第三节配 SSH Key、并执行 `.\bin\setup.ps1` 一次。
