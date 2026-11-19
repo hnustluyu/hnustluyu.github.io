@@ -20,7 +20,7 @@ param(
   [switch]$UseHexoDeploy
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
 
 # git.exe is not on PATH in this environment; auto-locate common installs.
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
