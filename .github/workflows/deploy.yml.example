@@ -1,0 +1,44 @@
+# 可选方案：GitHub Actions 自动构建
+#
+# 与 scripts/publish.ps1 **二选一**，不要同时启用，否则两边都会推 master。
+# 启用方法：把本文件改名为 deploy.yml，并把源码推到 hexo 分支。
+#
+# 适用场景：换电脑、或不想在本地装 Node/Hexo 时，只要把 .md 推到 hexo 分支
+#           网站就会自动重新生成。本地写日记仍可用 scripts/new-post.ps1。
+#
+# 注意：peaceiris/actions-gh-pages 默认会 force push 发布分支，
+#       master 上 2015 年的提交历史会被替换。想保留历史请用本地 publish.ps1。
+
+name: Deploy Hexo Site
+
+on:
+  push:
+    branches: [hexo]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Publish public/ to master
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: master
+          publish_dir: ./public
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'site updated via Actions: ${{ github.event.head_commit.message }}'

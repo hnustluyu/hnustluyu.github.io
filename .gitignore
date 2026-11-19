@@ -1,0 +1,24 @@
+# Hexo
+node_modules/
+public/
+.deploy_git/
+db.json
+*.log
+npm-debug.log*
+
+# 发布用的 master 工作副本（由 scripts/publish.ps1 自动创建）
+_deploy/
+# 本地私有数据（不上传 GitHub）
+_work/
+_upstream_snapshot/
+.workbuddy/
+import/
+.credentials/
+*.pem
+*.key
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

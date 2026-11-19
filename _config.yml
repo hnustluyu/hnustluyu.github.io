@@ -1,0 +1,97 @@
+# ============================================================
+# 西倉 / westbar.cn  ——  Hexo 站点配置
+# 由旧站 hnustluyu/hnustluyu.github.io 的静态页面反推还原
+# 关键原则：不改 URL、不改文章日期，保证老链接继续有效
+# ============================================================
+
+# Site
+title: 西倉
+subtitle: '人生除了眼前的苟且,還有詩和遠方!'
+description: '西倉 · 个人日记与随笔'
+author: hnustluyu
+language: zh-CN
+timezone: Asia/Shanghai
+
+# URL
+# CNAME 文件里是 www.westbar.cn，所以主域名用带 www 的形式
+url: https://www.westbar.cn
+root: /
+permalink: ':year/:month/:day/:title/'
+permalink_defaults:
+  lang: zh-CN
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: ':lang'
+skip_render: []
+
+# Writing
+new_post_name: ':year-:month-:day-:title.md'
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude: ''
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+
+# Category & Tag
+default_category: 随笔
+category_map:
+tag_map:
+
+# Date / Time format
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+use_date_for_updated: false
+
+# Pagination
+per_page: 10
+pagination_dir: page
+
+# Extensions
+theme: yilia
+
+# 主题配置覆盖（不修改 themes/yilia 目录，方便以后升级主题）
+theme_config:
+  menu:
+    主頁: /
+    全部家當: /archives/
+    扯淡: /categories/扯淡/
+  subnav:
+    github: https://github.com/hnustluyu/hnustluyu.github.io
+    weibo: https://weibo.com/hnustluyu
+    mail: mailto:luyu0088@126.com
+  avatar: /uploads/avatar.png
+  favicon: /favicon.png
+  share_jia: false          # JiaThis 已停服，关闭
+  duoshuo: false            # 多说已停服，关闭
+  disqus: false
+  reward_type: 0            # 关闭打赏
+  toc: 0
+  top: true
+  smart_menu:
+    innerArchive: '所有文章'
+    aboutme: '关于我'
+  aboutme: '人生除了眼前的苟且，還有詩和遠方！'
+  style:
+    header: '#4d4d4d'
+    slider: 'linear-gradient(200deg,#a0cfe4,#e8c37e)'
+
+# Deployment
+# 推送目标：仓库 master 分支（GitHub Pages 从 master 根目录提供静态文件）
+# 认证请用 SSH Key 或 PAT，切勿把密码写进这里或任何文件
+deploy:
+  type: git
+  repo: git@github.com:hnustluyu/hnustluyu.github.io.git
+  branch: master
+  message: 'site updated: {{ now("YYYY-MM-DD HH:mm:ss") }}'
