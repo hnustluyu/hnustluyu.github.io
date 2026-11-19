@@ -68,7 +68,7 @@ theme_config:
     weibo: https://weibo.com/hnustluyu
     mail: mailto:luyu0088@126.com
   avatar: /uploads/avatar.png
-  favicon: /favicon.png
+  favicon: /favicon-v2.png
   share_jia: false          # JiaThis 已停服，关闭
   duoshuo: false            # 多说已停服，关闭
   disqus: false

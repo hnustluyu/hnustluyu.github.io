@@ -21,6 +21,12 @@
 > Fluid 的样式是 Stylus 源码、必须现场编译。已安装并重建，`main.css` 生成 51KB，重新发布后
 > 线上 CSS 返回 200（52017B），样式恢复正常。
 >
+> **favicon 已换成漫画头像（2026-11-19 22:10）**：浏览器标签图标原先是白兔原始照片
+> （`source/favicon.png`，404×505 带背景）——因为根配置 `_config.yml` 的 `favicon: /favicon.png`
+> 优先级高于主题配置。已用漫画白兔头像生成 128×128 透明圆底 PNG，覆盖
+> `source/favicon.png` 与 `source/img/favicon.png`。注意：以后换头像要同时更新这两处 +
+> `source/img/rabbit-avatar.png`，且根配置 `/favicon.png` 不能被主题配置覆盖。
+>
 > 以后日常：写日记 → 本地预览 → `.\bin\publish.ps1` 一条命令发布（详见第五节）。
 > 首次在新机器用本手册时，按第三节配 SSH Key、并执行 `.\bin\setup.ps1` 一次。
 
